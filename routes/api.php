@@ -64,7 +64,7 @@ Route::prefix('test')->namespace('Test')->group(function () {
     Route::get('temshow', 'TemController@temShow'); //气质测试分数展示
 });
 
-
+/**
  * @author Dujingwen <github.com/DJWKK>
  */
 Route::prefix('test')->namespace('Test')->group(function(){
@@ -76,7 +76,7 @@ Route::prefix('test')->namespace('Test')->group(function(){
  */
 Route::prefix('person')->namespace('Person')->group(function(){
     Route::get('userdetails','UserController@userDetails');//获取用户信息
-    Route::post('usersearch','UserController@userSearch');//查找某个用户信息
+    Route::get('usersearch','UserController@userSearch');//查找某个用户信息
 });
 
 

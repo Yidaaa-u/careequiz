@@ -14,7 +14,7 @@ class UserController extends Controller
      * @return Json
      */
     public function userDetails(){
-        $data = Userinfo::searchInfo();
+        $data = Userinfo::djw_searchInfo();
         return $data?
             json_success('获取全部用户信息成功',$data,200) :
             json_fail('获取全部用户信息失败',null,100);
@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function userSearch(UserSearchRequest $request){
         $name = $request['name'];
-        $data = Userinfo::single($name);
+        $data = Userinfo::djw_single($name);
         return $data?
             json_success('获取单个用户信息成功',$data,200) :
             json_fail('获取单个用户信息失败',null,100);

@@ -80,7 +80,7 @@ class Admin extends \Illuminate\Foundation\Auth\User implements JWTSubject,\Illu
      */
     public static function cwp_all(){
         try {
-            $data =  self::where('auth_code',1)->count();
+            $data['allNumber '] =  self::where('auth_code',1)->count();
             return $data;
         } catch (\Exception $e) {
             logError('用户获取失败',[$e->getMessage()]);

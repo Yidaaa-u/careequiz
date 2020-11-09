@@ -23,7 +23,7 @@ class TemController extends Controller
         $id=auth('user')->user()->useid;
         $data=Temperament::cm_temSubmit($id,$a,$b,$c,$d);
         return $data ?
-            json_success('成功!', $data, 200) :
+            json_success('成功!', null, 200) :
             json_fail('失败!', null, 100);
     }
 

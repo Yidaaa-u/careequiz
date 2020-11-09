@@ -21,18 +21,19 @@ class Pdp extends Model
 
         try {
 
-            $data = self::where('id',$useid)
+            $data = self::where('id', $useid)
                 ->exists();
-            if($data == null){
+            if ($data == null) {
                 $data = "未测试";
-            }else{
-                $data ="已测试";
+            } else {
+                $data = "已测试";
             }
             return $data;
-        } catch(\Exception $e){
-            logError('PDP性格测试测试状态回显错误',[$e->getMessage()]);
+        } catch (\Exception $e) {
+            logError('PDP性格测试测试状态回显错误', [$e->getMessage()]);
+        }
 
-
+    }
     /**
      * 录入PDP各项分数
      * @author Dujingwen <github.com/DJWKK>
@@ -44,7 +45,7 @@ class Pdp extends Model
      * @param $chameleon => 变色龙的分数
      * @return |null
      */
-    public static function addPdp($id,$tiger,$peacock,$Koala,$owl,$chameleon){
+    public static function djw_addPdp($id,$tiger,$peacock,$Koala,$owl,$chameleon){
         try{
             $data = self::create(
                 [
@@ -60,6 +61,26 @@ class Pdp extends Model
         }catch(\Exception $e){
             logError('录入用户PDP测试信息失败',[$e->getMessage()]);
 
+            return null;
+        }
+    }
+
+    /**
+     * 查找用户PDP最新的分数
+     * @author Dujingwen <github.com/DJWKK>
+     * @param $id => 用户的id
+     * @return |null
+     */
+    public static function djw_searchPdp($id)
+    {
+        try {
+            $data = self::where('id', $id)
+                ->orderBy('created_at', 'DESC')
+                ->select('tiger', 'peacock', 'Koala', 'owl','chameleon')
+                ->get();
+            return $data;
+        } catch (\Exception $e) {
+            logError('录入用户PDP测试信息失败', [$e->getMessage()]);
             return null;
         }
     }
@@ -92,40 +113,23 @@ class Pdp extends Model
     public static function lzz_pdpSelect($name)
     {
         try {
-            if($name == null){
-                $data = Pdp::join('userinfo as uo','uo.id','pdp.id')
-                    ->select('pdp.id','uo.name','pdp.tiger','pdp.peacock','pdp.koala','pdp.owl','pdp.chameleon')
+            if ($name == null) {
+                $data = Pdp::join('userinfo as uo', 'uo.id', 'pdp.id')
+                    ->select('pdp.id', 'uo.name', 'pdp.tiger', 'pdp.peacock', 'pdp.koala', 'pdp.owl', 'pdp.chameleon')
                     ->get();
                 return $data;
-            }else{
-                $data = Pdp::join('userinfo as uo','uo.id','pdp.id')
-                    ->select('pdp.id','uo.name','pdp.tiger','pdp.peacock','pdp.koala','pdp.owl','pdp.chameleon')
-                    ->where('uo.name',$name)
+            } else {
+                $data = Pdp::join('userinfo as uo', 'uo.id', 'pdp.id')
+                    ->select('pdp.id', 'uo.name', 'pdp.tiger', 'pdp.peacock', 'pdp.koala', 'pdp.owl', 'pdp.chameleon')
+                    ->where('uo.name','like','%'.$name.'%')
                     ->get();
             }
             return $data;
-        } catch(\Exception $e){
-            logError('PDP性格测试查询错误',[$e->getMessage()]);
+        } catch (\Exception $e) {
+            logError('PDP性格测试查询错误', [$e->getMessage()]);
             return null;
         }
-
-
-     * 查找用户PDP最新的分数
-     * @author Dujingwen <github.com/DJWKK>
-     * @param $id => 用户的id
-     * @return |null
-     */
-    public static function searchPdp($id){
-        try{
-            $data = self::where('id',$id)
-                ->orderBy('created_at','DESC')
-                ->select('tiger','peacock','Koala','owl')
-                ->get();
-            return $data;
-        }catch(\Exception $e){
-            logError('录入用户PDP测试信息失败',[$e->getMessage()]);
-            return null;
-        }
+    }
 
     /**
      * pdp测试的人数
@@ -134,7 +138,7 @@ class Pdp extends Model
      */
     public static function cwp_pdpNum(){
         try {
-            $data =  self::count();
+            $data['pdpNumber'] =  self::distinct('id')->count();
             return $data;
         } catch (\Exception $e) {
             logError('用户获取失败',[$e->getMessage()]);

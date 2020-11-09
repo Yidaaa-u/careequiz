@@ -27,7 +27,7 @@ class PdpController extends Controller
         $Koala = $request['Koala'];
         $owl = $request['owl'];
         $chameleon = $request['chameleon'];
-        $data = Pdp::addPdp($id,$tiger,$peacock,$Koala,$owl,$chameleon);
+        $data = Pdp::djw_addPdp($id,$tiger,$peacock,$Koala,$owl,$chameleon);
         return $data?
             json_success('获取PDP各项分数成功',null,200) :
             json_fail('获取PDP各项分数失败',null,100);
@@ -42,7 +42,7 @@ class PdpController extends Controller
      */
     public function pdpShow(PdpShowRequest $request){
         $id = auth('user')->user()->useid;
-        $data = Pdp::searchPdp($id);
+        $data = Pdp::djw_searchPdp($id);
         return $data?
             json_success('展示PDP各项分数成功',$data,200) :
             json_fail('展示PDP各项分数失败',null,100);

@@ -52,7 +52,7 @@ class Hld extends Model
      */
     public static function cwp_hollandNum(){
         try {
-            $data =  self::count();
+            $data['hollandNumber'] =  self::distinct('id')->count();
             return $data;
         } catch (\Exception $e) {
             logError('用户获取失败',[$e->getMessage()]);
@@ -165,7 +165,7 @@ class Hld extends Model
             }else{
                 $data = Hld::join('userinfo as uo','uo.id','hld.id')
                     ->select('hld.id','uo.name','hld.first','hld.second','hld.third')
-                    ->where('uo.name',$name)
+                    ->where('uo.name','like','%'.$name.'%')
                     ->get();
             }
             return $data;

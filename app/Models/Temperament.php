@@ -20,18 +20,19 @@ class Temperament extends Model
     {
 
         try {
-            $data = Temperament::where('id',$useid)
-                    ->exists();
-            if($data == null){
+            $data = Temperament::where('id', $useid)
+                ->exists();
+            if ($data == null) {
                 $data = "未测试";
-            }else{
-                $data ="已测试";
+            } else {
+                $data = "已测试";
             }
             return $data;
-        } catch(\Exception $e){
-            logError('气质测试回显测试状态回显错误',[$e->getMessage()]);
+        } catch (\Exception $e) {
+            logError('气质测试回显测试状态回显错误', [$e->getMessage()]);
 
-
+        }
+    }
     /**
      * 气质测评确定提交
      * @author ChenMiao <github.com/Yidaaa-u>
@@ -68,13 +69,16 @@ class Temperament extends Model
     public static function lzz_temperamentBack()
     {
         try {
-            $data = Temperament::join('userinfo as uo','uo.id','temperament.id')
-                                 ->select('temperament.id','uo.name'
-                                     ,'temperament.a','temperament.b','temperament.c','temperament.d')
-                                 ->get();
+            $data = Temperament::join('userinfo as uo', 'uo.id', 'temperament.id')
+                ->select('temperament.id', 'uo.name'
+                    , 'temperament.a', 'temperament.b', 'temperament.c', 'temperament.d')
+                ->get();
             return $data;
-        } catch(\Exception $e){
-           logError('气质测试后台回显详情错误',[$e->getMessage()]);
+        } catch (\Exception $e) {
+            logError('气质测试后台回显详情错误', [$e->getMessage()]);
+        }
+    }
+           /**
      * 气质测试分数展示
      * @author ChenMiao <github.com/Yidaaa-u>
      * @param String $id
@@ -113,9 +117,9 @@ class Temperament extends Model
                 return $data;
             }else{
                 $data = Temperament::join('userinfo as uo','uo.id','temperament.id')
+                    ->where('uo.name','like','%'.$name.'%')
                     ->select('temperament.id','uo.name'
                         ,'temperament.a','temperament.b','temperament.c','temperament.d')
-                    ->where('uo.name',$name)
                     ->get();
             }
             return $data;
@@ -124,13 +128,14 @@ class Temperament extends Model
             return null;
         }
     }
+    /**
      * 性格测试人数
      * @author caiwenpin <github.com/codercwp>
      * @return data
      */
     public static function cwp_temNum(){
         try {
-            $data =  self::count();
+            $data['temNumber'] =  self::distinct('id')->count();
             return $data;
         } catch (\Exception $e) {
             logError('查询失败',[$e->getMessage()]);
