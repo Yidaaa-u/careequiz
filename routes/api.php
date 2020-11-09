@@ -35,6 +35,22 @@ Route::prefix('person')->namespace('Person')->group(function () {
 });//--lzz
 
 
+/**
+ * @author Dujingwen <github.com/DJWKK>
+ */
+Route::prefix('test')->namespace('Test')->group(function(){
+    Route::post('pdpsubmit','PdpController@phpSubmit');//获取PDP各项分数
+    Route::get('pdpshow','PdpController@pdpShow');//PDP测试分数展示
+});
+/**
+ * @author Dujingwen <github.com/DJWKK>
+ */
+Route::prefix('person')->namespace('Person')->group(function(){
+    Route::get('userdetails','UserController@userDetails');//获取用户信息
+    Route::post('usersearch','UserController@userSearch');//查找某个用户信息
+});
+
+
 Route::prefix('test')->namespace('Test')->group(function () {
     Route::post('addholland', 'HollandController@addHolland'); //添加霍兰德测试
     Route::get('resholland', 'HollandController@resHolland'); //返回霍兰德测试结果
@@ -50,3 +66,4 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::get('pdpaverage', 'HomeController@pdpAverage'); //pdp测试平均分
     Route::get('hollandaverage', 'HomeController@hollandAverage');//Holland测试平均分
 });//--cwp
+
