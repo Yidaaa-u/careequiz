@@ -33,3 +33,18 @@ Route::prefix('person')->namespace('Person')->group(function () {
 
     Route::get('test','PersonController@test');
 });//--lzz
+
+/**
+ * @author Dujingwen <github.com/DJWKK>
+ */
+Route::prefix('test')->namespace('Test')->group(function(){
+    Route::post('pdpsubmit','PdpController@phpSubmit');//获取PDP各项分数
+    Route::get('pdpshow','PdpController@pdpShow');//PDP测试分数展示
+});
+/**
+ * @author Dujingwen <github.com/DJWKK>
+ */
+Route::prefix('person')->namespace('Person')->group(function(){
+    Route::get('userdetails','UserController@userDetails');//获取用户信息
+    Route::post('usersearch','UserController@userSearch');//查找某个用户信息
+});
