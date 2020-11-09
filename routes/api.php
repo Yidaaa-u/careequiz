@@ -36,6 +36,15 @@ Route::prefix('person')->namespace('Person')->group(function () {
 
 
 /**
+
+ * @author ChenMiao <github.com//Yidaaa-u>
+ */
+Route::prefix('test')->namespace('Test')->group(function () {
+    Route::post('temsubmit', 'TemController@temSubmit'); //气质测评确定提交
+    Route::get('temshow', 'TemController@temShow'); //气质测试分数展示
+});
+
+
  * @author Dujingwen <github.com/DJWKK>
  */
 Route::prefix('test')->namespace('Test')->group(function(){
@@ -66,4 +75,5 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::get('pdpaverage', 'HomeController@pdpAverage'); //pdp测试平均分
     Route::get('hollandaverage', 'HomeController@hollandAverage');//Holland测试平均分
 });//--cwp
+
 
