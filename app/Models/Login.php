@@ -72,4 +72,6 @@ class Login extends \Illuminate\Foundation\Auth\User implements JWTSubject,\Illu
 
         }
     }
+
+
 }
