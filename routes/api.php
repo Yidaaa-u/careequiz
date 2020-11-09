@@ -33,3 +33,13 @@ Route::prefix('person')->namespace('Person')->group(function () {
 
     Route::get('test','PersonController@test');
 });//--lzz
+
+
+/**
+ * @author ChenMiao <github.com//Yidaaa-u>
+ */
+Route::prefix('test')->namespace('Test')->group(function () {
+    Route::post('temsubmit', 'TemController@temSubmit'); //气质测评确定提交
+    Route::get('temshow', 'TemController@temShow'); //气质测试分数展示
+});
+
