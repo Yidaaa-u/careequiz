@@ -25,7 +25,7 @@ class AdminController extends Controller
             if(auth('user')->user()->auth_code == 0){
                 return self::respondWithToken($token, '登陆成功!');
             }else{
-                AdminController::logout();
+                auth()->logout();
                 return json_fail(500, '登陆失败!', null, 500);
             }
         } catch (\Exception $e) {
