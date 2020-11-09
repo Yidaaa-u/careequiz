@@ -10,10 +10,10 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     /**
-* 登录
-* @param Request $loginRequest
-* @return \Illuminate\Http\JsonResponse
-*/
+     * 登录
+     * @param Request $loginRequest
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $loginRequest)
     {
         try {
@@ -21,11 +21,16 @@ class AdminController extends Controller
             if (!$token = auth('user')->attempt($credentials)) {
                 return response()->fail(100, '账号或者用户名错误!', null);
             }
-            var_dump(auth('user')->user());
-            return self::respondWithToken($token, '登陆成功!');
+
+            if(auth('user')->user()->auth_code == 0){
+                return self::respondWithToken($token, '登陆成功!');
+            }else{
+                AdminController::logout();
+                return json_fail(500, '登陆失败!', null, 500);
+            }
         } catch (\Exception $e) {
             echo $e->getMessage();
-            return response()->fail(500, '登陆失败!', null, 500);
+            return json_fail(500, '登陆失败!', null, 500);
         }
     }
 
@@ -99,6 +104,7 @@ class AdminController extends Controller
         $registeredInfo = $request->except('password_confirmation');
         $registeredInfo['password'] = bcrypt($registeredInfo['password']);
         $registeredInfo['phone'] = $registeredInfo['phone'];
+        $registeredInfo['auth_code'] = 0;
         return $registeredInfo;
     }
 
